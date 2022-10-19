@@ -9,15 +9,15 @@ Dataset: https://www.muratkoklu.com/datasets/Grapevine_Leaves_Image_Dataset.zip
 
 Model 1:
 In this method, we create a simple CNN with 5 layers as follows. (Model is trained with 45 epochs) 
-  layers.Conv2D(9, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(32, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(64, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Flatten(),
-  layers.Dense(128, activation='relu'),
-  layers.Dense(num_classes)
+  Conv2D(9, 3, padding='same', activation='relu'),
+  MaxPooling2D(),
+  Conv2D(32, 3, padding='same', activation='relu'),
+  MaxPooling2D(),
+  Conv2D(64, 3, padding='same', activation='relu'),
+  MaxPooling2D(),
+  Flatten(),
+  Dense(128, activation='relu'),
+  
 
 Model 2:
 For this method, the data of the most part is augmented. To augment images, we perform several different fuvtions such as horizontal filp, trasfering, zooming and rotation.
