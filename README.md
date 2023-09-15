@@ -1,8 +1,8 @@
-# Grapevine Leaves Classification Research
+# Grapevine Leaves Classification
 
 ## Introduction
 
-This research project is focused on the classification of grapevine leaves, with the primary goal of identifying the most effective classification model among various methods. The dataset used in this study consists of images of grapevine leaves categorized into five distinct classes, each containing one hundred images of a specific grape leaf type. The ultimate objective is to select the best-performing model based on its accuracy in classifying these images.
+This research is focused on the classification of grapevine leaves, with the primary goal of identifying the most effective classification model among various methods. The dataset used in this study consists of images of grapevine leaves categorized into five distinct classes, each containing one hundred images of a specific grape leaf type. The ultimate objective is to select the best-performing model based on its accuracy in classifying these images.
 
 ### Dataset
 You can access the dataset used in this research via this [link](https://www.muratkoklu.com/datasets/Grapevine_Leaves_Image_Dataset.zip).
