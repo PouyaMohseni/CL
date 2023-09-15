@@ -1,47 +1,60 @@
-# CL
-Models for grapevine leaves classification 
+# Grapevine Leaves Classification Research
 
-This research has been conducted to find the best classification model to classify images of the data presented grapevine leaves. There are five classes and each constains one hundred images of a specific type of grape leaf. In the following, we discuss eight different methods for classification, and based on the accuracy, the best model is choosed.
+## Introduction
 
-Different approachs such as feature extraction, trasfer learning, feature selection, augmentation, encoders etc. were used in different models. Here different models are briefly summerized:
+This research project is focused on the classification of grapevine leaves, with the primary goal of identifying the most effective classification model among various methods. The dataset used in this study consists of images of grapevine leaves categorized into five distinct classes, each containing one hundred images of a specific grape leaf type. The ultimate objective is to select the best-performing model based on its accuracy in classifying these images.
 
-Dataset: https://www.muratkoklu.com/datasets/Grapevine_Leaves_Image_Dataset.zip
+### Dataset
+You can access the dataset used in this research via this [link](https://www.muratkoklu.com/datasets/Grapevine_Leaves_Image_Dataset.zip).
 
-Model 1:
-In this method, we create a simple CNN with 5 layers as follows. (Model is trained with 45 epochs) 
-  Conv2D(9, 3, padding='same', activation='relu'),
-  MaxPooling2D(),
-  Conv2D(32, 3, padding='same', activation='relu'),
-  MaxPooling2D(),
-  Conv2D(64, 3, padding='same', activation='relu'),
-  MaxPooling2D(),
-  Flatten(),
-  Dense(128, activation='relu'),
-  
+## Classification Methods
 
-Model 2:
-For this method, the data of the most part is augmented. To augment images, we perform several different fuvtions such as horizontal filp, trasfering, zooming and rotation.
-Augmentation of images is preformed by the help of a sequential neural network; we create a new network so that several primary layers are superimposed on the image augmentation and later layers according to the primary network architecture. Therefore, in this architecture, we fit the initial model on the augmented images. (In this method, unlike the previous method, we use 150 epochs, because the model made of augmented images is less threatened by overfit.)
+In this section, we provide an overview of the eight different classification methods explored in this research. Each method incorporates distinct approaches and techniques, such as feature extraction, transfer learning, feature selection, augmentation, and the use of various neural network architectures.
 
-Model 3:
-In this method, we use the pre-trained MobileNetv2 model after being fine tuned. So that a classification layer is added and only the weights leading to the last layer are traind. For this method, it is necessary that the number of pixels in length and width be equal to the input of the pre-traind moreover, the images should be three-channeled, which we obtain by resizing the input images. It should be noted that in this method, the input images are not augmented.
+### Model 1: Simple CNN
+- A basic Convolutional Neural Network (CNN) with five layers.
+- Architecture:
+  - Conv2D(9, 3, padding='same', activation='relu')
+  - MaxPooling2D()
+  - Conv2D(32, 3, padding='same', activation='relu')
+  - MaxPooling2D()
+  - Conv2D(64, 3, padding='same', activation='relu')
+  - MaxPooling2D()
+  - Flatten()
+  - Dense(128, activation='relu')
+- Trained for 45 epochs.
 
-Model 4:
-In this method, we try to involve a layer with the ability to augment data in the third method. So that before the images enter the pre-trained MobileNetv2 network, they pass through layers to be augmented. By using this method, we can increase the number of epochs without fear of having an overfited model.
+### Model 2: Augmented Data
+- Data augmentation techniques applied, including horizontal flips, translations, zooming, and rotations.
+- A sequential neural network used for image augmentation, with primary layers superimposed.
+- Trained for 150 epochs, benefiting from the augmented data.
 
-Model 5:
-First, we use the state-of-art 16VGG as feature extractor. Then we use the output of the last layer of the pre-learned model for the input of the RFC and the SVC with different parameters.
+### Model 3: Fine-Tuned MobileNetv2
+- Utilizes a pre-trained MobileNetv2 model with fine-tuning.
+- Adds a classification layer while maintaining input size constraints.
+- Input images are not augmented.
 
-Model 6:
-In the previous method, 25088 (the size of VGG16 classes) features are extracted and given to the classifiers. This amount is much lower than 365, which is the number of Images (without augmentation), so PCA method is used to reduce the dimensions of the model output -as a feature selector. It should be noted that due to the input limitation, a maximum of 365 different attributes can be kept. We run PCA four times and each time we keep 365, 200, 100 and 50 attributes respectively.
+### Model 4: Augmentation + MobileNetv2
+- Augmentation layers introduced before inputting images into the pre-trained MobileNetv2 network.
+- Enables the use of more training epochs without overfitting concerns.
 
-Model 7:
-The weak part of the previous model was not having a large number of inputs, which made the comparison of PCA dimensions meaningless. In the seventh method, we follow the sequence of the sixth method, with the difference that we attach a neural network to the top of VGG16 to augment the input data and input the previous data four times (augment the data four times), so we have the 1500 most input. We check thirteen different modes for the number of features. Some of the results of the implementation of these dimension reductions on the six previously introduced models are shown in the figure below, and the accuracy diagram of the models according to the dimension reduction is shown below:
-![Uploading image.png…]()
+### Model 5: VGG16 Feature Extractor
+- Employs VGG16 as a feature extractor.
+- Utilizes the output of VGG16's last layer as input for Random Forest Classifier (RFC) and Support Vector Classifier (SVC) with different parameters.
 
-Model 8:
-Now we try to use autoencoder to identify the best output features of VGG16; In this way, we give the output of VGG16 to an autoencoder and train the model so that it can reconstruct the output classes. In fact, we use four separate phases to meet the needs. The first phase is for data augmentation, the second phases is VGG16 for generating attributes, the encoder model is for dimension reduction, and finally the random forest model or SVM for classification.
+### Model 6: Dimension Reduction with PCA
+- Applies Principal Component Analysis (PCA) to reduce feature dimensions.
+- Multiple PCA runs retain varying numbers of attributes: 365, 200, 100, and 50.
 
+### Model 7: Enhanced PCA
+- Builds upon Model 6 with an augmented input data strategy.
+- Adds a neural network to augment input data, resulting in 1500 input features.
+- Explores thirteen different feature dimension reduction modes.
 
-Conclusion:
-At the end, we select the best built model and implement cross-fold validation on it, and then polt the obtained accuracies in the confusion matrix. The best model was an SVM model whose input parameters came from the VGG16 model (5th model). (Because the most of the data must be specified in K-fold Cross, the previous extension cannot be used to augment the data, so we use static augmentaion.)
+### Model 8: Autoencoder Feature Extraction
+- Utilizes autoencoders to identify optimal VGG16 output features.
+- Comprises four phases: data augmentation, VGG16 attribute generation, encoder-based dimension reduction, and classification using Random Forest or SVM.
+
+## Conclusion
+
+At the conclusion of this research, the best-performing model is determined to be an SVM model, which leverages input parameters derived from VGG16 (Model 5). To validate the model's performance, cross-fold validation is implemented, and the resulting accuracies are visualized using a confusion matrix. It's worth noting that static augmentation is employed due to the necessity of specifying most of the data in K-fold Cross validation. This research provides valuable insights into the classification of grapevine leaves, showcasing the effectiveness of various approaches and techniques.
